@@ -1,0 +1,5 @@
+.buckd/
+.DS_Store
+
+buck-*
+bazel-*
