@@ -5,7 +5,8 @@ __PROJECT_NAME="${1}"
 __NUMBER_OF_MODULES="${2:-5}"
 __LOC="${3:-15000}"
 __TYPE="${4:-flat}"
-__OUTPUT_DIR="${5:-../${__PROJECT_NAME}}"
+__NUMBER_OF_LAYERS="${5:-4}"
+__OUTPUT_DIR="${6:-../${__PROJECT_NAME}}"
 
 __generate() {
   if [[ "$(ls -A ${__OUTPUT_DIR})" ]]; then return 0; fi
@@ -15,7 +16,8 @@ __generate() {
     --buck_module_path "/${__PROJECT_NAME}" \
     --gen_type "${__TYPE}" \
     --lines_of_code "${__LOC}" \
-    --module_count "${__NUMBER_OF_MODULES}"
+    --module_count "${__NUMBER_OF_MODULES}" \
+    --app_layer_count "${__NUMBER_OF_LAYERS}"
 }
 
 __copy_workspace() {

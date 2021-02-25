@@ -5,7 +5,7 @@ This repository contains experimental projects and scripts that allow benchmarki
 ### Contents
 There are 2 projects in this repository:
 * `./pet-app` – simulates a personal project with just `1000` lines of code and 3 modules.
-* `./small-company` – simulates a project of a small company with `15k` lines of code and 11 modules.
+* `./company-app` – simulates a project of a small company with `15k` lines of code and 11 modules.
 
 The rest of the files in the repo are supporting. The ones that worth highlighting are:
 * `./scripts` – a directory that contains automation scripts for benchmarking and mock-project generation.
@@ -25,10 +25,10 @@ This command will run benchmarks for the following scenarios:
 * 10 sequential _incremental_ builds of the `pet-app` using `xcodebuild`;
 * 10 sequential _clean_ builds of the `pet-app` using `Bazel`;
 * 10 sequential _clean_ builds of the `pet-app` using `xcodebuild`;
-* 10 sequential _incremental_ builds of the `small-company` using `Bazel`;
-* 10 sequential _incremental_ builds of the `small-company` using `xcodebuild`;
-* 10 sequential _clean_ builds of the `small-company` using `Bazel`;
-* 10 sequential _clean_ builds of the `small-company` using `xcodebuild`;
+* 10 sequential _incremental_ builds of the `company-app` using `Bazel`;
+* 10 sequential _incremental_ builds of the `company-app` using `xcodebuild`;
+* 10 sequential _clean_ builds of the `company-app` using `Bazel`;
+* 10 sequential _clean_ builds of the `company-app` using `xcodebuild`;
 
 \* – The number of sequential runs can be modified in the `benchmark.sh`
 
@@ -43,9 +43,9 @@ $ make benchmark_pet_project
 ```
 – To run experiments against the `./pet-app`
  ```bash
- $ make benchmark_small_company_project
+ $ make benchmark_company_project
  ```
-– To run experiments against the `./small-company` project.
+– To run experiments against the `./company-app` project.
 The reports for the experiments will be similar to the ones received when running all build experiments
 
 ### Generating new projects
@@ -55,9 +55,10 @@ $ GEN_PROJECT_NAME=<your-proj-name> make generate_project
 ```
 
 This command will use `uber-poet` to generate a mock project with the following parameters:
-* `modules`: **11**
+* `modules`: **12**
 * `lines_of_code`: **150000**
-* `type`: **flat**
+* `type`: **layered**
+* `layers`: **4**
 
 If you must change any of these parameters, please do so in the `Makefile` or by providing corresponding variables as part of your `make` call.
 

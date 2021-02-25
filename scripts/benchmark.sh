@@ -1,14 +1,61 @@
-__START=0
-__STOP=0
+# -- INPUT --
 
 __APP_PATH="${1}"
 __TYPE="${2:-incremental}"
+__STRUCT="${3:-flat}"
+
+# -- CONFIG --
 
 __NUMBER_OF_ITERATIONS=10
 __HEADER="#;time"
 __FOOTER="avg;=SUM(B2:B$(( 1 + ${__NUMBER_OF_ITERATIONS} )))/${__NUMBER_OF_ITERATIONS}"
 __XCODEBUILD_REPORT="xcodebuild-${__TYPE}.csv"
 __BAZEL_REPORT="bazel-${__TYPE}.csv"
+
+# -- INTERNAL VARIABLES --
+__START=0
+__STOP=0
+__MOCK_MODULE_NAME="MockLib2"
+__SOURCES_FILE_PATH="Sources/File1.swift"
+__ORIGINAL_NEEDLE="x = 7"
+__NEEDLE="${__ORIGINAL_NEEDLE}"
+__REPLACEMENT_OPTIONS=(
+"x = 3"
+"x = 5"
+"x = 24"
+"x = 42"
+"x = 21"
+)
+
+__get_source_file_path() {
+  local level_suffix=""
+  if [[ "layered" == "${__STRUCT}" ]]; then local level_suffix="_1"; fi
+
+  echo "${__MOCK_MODULE_NAME}${level_suffix}/${__SOURCES_FILE_PATH}"
+}
+
+__modify_sources() {
+  if [[ "${__TYPE}" == "clean" ]]; then return 0; fi
+
+  local iteration="${1}"
+  local index=$(( $iteration % 5 ))
+  local file=$(__get_source_file_path)
+  local phrase="${__REPLACEMENT_OPTIONS[$index]}"
+
+  sed -i '' "s|$__NEEDLE|$phrase|g" "${file}"
+
+  __NEEDLE=$phrase
+}
+
+__revert_changes() {
+  if [[ "${__TYPE}" == "clean" ]]; then return 0; fi
+
+  local file=$(__get_source_file_path)
+
+  sed -i '' "s|$__NEEDLE|$__ORIGINAL_NEEDLE|g" "${file}"
+
+  __NEEDLE=$__ORIGINAL_NEEDLE
+}
 
 __bazel() {
   local trial="${1}"
@@ -27,7 +74,9 @@ __bench_bazel() {
   echo "${__HEADER}" > "${__BAZEL_REPORT}"
   for (( i=1; i<=$__NUMBER_OF_ITERATIONS; i++ )); do
     __bazel "${i}" >> "${__BAZEL_REPORT}"
+    __modify_sources ${i}
   done
+  __revert_changes
   echo "${__FOOTER}" >> "${__BAZEL_REPORT}"
   cd - &> /dev/null
   mv "${__APP_PATH}/${__BAZEL_REPORT}" "${report_path}/${__BAZEL_REPORT}"
@@ -55,7 +104,9 @@ __bench_xcodebuild() {
   echo "${__HEADER}" > "${__XCODEBUILD_REPORT}"
   for (( i=1; i<=$__NUMBER_OF_ITERATIONS; i++ )); do
     __xcodebuild "${i}" >> "${__XCODEBUILD_REPORT}"
+    __modify_sources ${i}
   done
+  __revert_changes
  echo "${__FOOTER}" >> "${__XCODEBUILD_REPORT}"
   cd - &> /dev/null
   mv "${__APP_PATH}/${__XCODEBUILD_REPORT}" "${report_path}/${__XCODEBUILD_REPORT}"
