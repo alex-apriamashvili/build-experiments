@@ -30,7 +30,7 @@ public class MyClass13864 {
     public let y: String
 
     public init() {
-        x = 21
+        x = 7
         y = "hi"
     }
 
@@ -76,7 +76,7 @@ public class MyClass13870 {
     public let y: String
 
     public init() {
-        x = 21
+        x = 7
         y = "hi"
     }
 
@@ -122,7 +122,7 @@ public class MyClass13876 {
     public let y: String
 
     public init() {
-        x = 21
+        x = 7
         y = "hi"
     }
 
