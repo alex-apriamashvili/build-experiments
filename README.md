@@ -10,7 +10,7 @@ There are 2 projects in this repository:
 The rest of the files in the repo are supporting. The ones that worth highlighting are:
 * `./scripts` – a directory that contains automation scripts for benchmarking and mock-project generation.
 * `./.logs` – a directory that contains logs and .csv-reports from the experiment runs.
-* `./uber-poet` – a a [fork](https://github.com/alex-apriamashvili/uber-poet.git) of the [mock-project generation tool](https://github.com/uber/uber-poet) developed by Uber.
+* `./uber-poet` – a [fork](https://github.com/alex-apriamashvili/uber-poet.git) of the [mock-project generation tool](https://github.com/uber/uber-poet) developed by Uber.
 * `Makefile` – a [`GNU Make`](https://www.gnu.org/software/make/) file that serves as an entry point for all scripts.
 
 ### Prerequisites
