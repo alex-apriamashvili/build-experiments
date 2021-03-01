@@ -21,7 +21,7 @@ benchmark_pet_project:
 benchmark_company_project:
 	@echo "measuring performance in the ${M_PROJ_NAME}"
 	sh scripts/benchmark.sh $(M_PROJ_NAME) incremental layered
-	sh scripts/benchmark.sh $(M_PROJ_NAME) clean layered
+	# sh scripts/benchmark.sh $(M_PROJ_NAME) clean layered
 
 ## BAZEL PROJECT GENERATION
 
