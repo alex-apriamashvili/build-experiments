@@ -2,12 +2,12 @@ S_PROJ_NAME := pet-app
 M_PROJ_NAME := company-app
 
 # PROJECT GENERATION
-GEN_PROJECT_NAME 			?= medium-app
+GEN_PROJECT_NAME      ?= medium-app
 GEN_NUMBER_OF_MODULES ?= 12
-GEN_NUMBER_OF_LAYERS 	?= 4
-GEN_LOC								?= 150000
-GEN_TYPE							?= layered
-GEN_OUTPUT_DIR				?= ../$(GEN_PROJECT_NAME)
+GEN_NUMBER_OF_LAYERS  ?= 4
+GEN_LOC               ?= 150000
+GEN_TYPE              ?= layered
+GEN_OUTPUT_DIR        ?= ../$(GEN_PROJECT_NAME)
 
 ## BENCHMARKING
 
